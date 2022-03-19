@@ -1,9 +1,5 @@
 import random
-
-
-print("Boas vindas ao gerador de senhas aleatórias.")
-sn = input("Deseja fazer uma senha? ")
-sn = sn.lower()
+from string import octdigits
 
 def generate():
   password = ""
@@ -24,30 +20,63 @@ def generate():
         character = random.randrange(48, 57)
         character = chr(character)
         password = password + str(character)
-    print(password + "\n")
-    sn2 = input("Deseja salvar essa senha? ")
-    sn2 = sn2.lower()
-    if sn2 == "sim":
-      passname = input("\nDigite um nome para esta senha: ")
-      passwords_file = open("mypasswords.txt", "a")
-      passwords_file.write("\n"+ passname + ": " + password)
-      passwords_file.close()
-    else:
-      print("Senha descartada")
-    sn = input("Deseja fazer uma nova senha? ")
-    sn = sn.lower()
-    if sn == "sim": # Se for verdadeiro, segue e faz novamente. - O True pode ser descartado.
-      sn = True
-      generate()
-    else: # Se for QUALQUER outra coisa escrita, cancela.
-      print("O programa será fechado.")
-      exit
+    print("Senha gerada: " + password + "\n")
+    salvar(password) # Função que dá a chance de salvar a senha, com o argumento sendo a varíavel password.
+    opgen() # Função que pergunta ao usuário se deseja criar outra senha.
   else:
     print("O programa será fechado.")
     exit
-  
-if sn == "sim": #Mantendo a informação anterior, pode ser trocado se os inputs anteriores forem jogados aqui para cá.
-  generate()
-else:
-  print("O programa será fechado.")
-  exit
+
+def opgen(): # Ao ter trocado de sn para snop deu certo, mas porque?
+  snop = input("Deseja fazer uma nova senha (sim/não)? ") # Entrega o input para as escolhar, sim ou não. 
+  snop = snop.lower()
+  if snop == "sim": # Se for verdadeiro, segue e faz novamente. - O True pode ser descartado.
+    sn = True
+    generate()
+  elif snop == "não" or "nao": # Código empaca aqui, mesmo se for uma outra coisa.
+    print("Retornando para as opções.\n")
+    options()
+  else:
+    print("Este não é um comando válido.")
+    opgen()
+
+def salvar(password): # Listei o parâmetro sendo a varíavel password, existente na função anterior.
+  sn2 = input("Deseja salvar essa senha (sim/não)? ") # Entrega o input para as escolhar, sim ou não.
+  sn2 = sn2.lower()
+  if sn2 == "sim":
+    passname = input("\nDigite um nome para esta senha: ")
+    passwords_file = open("mypasswords.txt", "a")
+    passwords_file.write("\n"+ passname + ": " + password)
+    passwords_file.close()
+  elif sn2 == "não": # Código empaca aqui, mesmo se for uma outra coisa.
+    print("Senha descartada")
+  else: # Retorna a pergunta se for digitado outro valor para o input.
+    print("Este não é um comando válido.")
+    salvar()
+
+def options():
+  op = input("Deseja fazer uma nova senha (nova), ver suas senhas salvas (salvas) ou fechar o programa (fechar)? ")
+  op = op.lower()
+  if op == "nova": # Gera senhas.
+    generate()
+  elif op == "salvas": # Abre o arquivo e mostra ele na linha de código - DEVE EXISTIR JUNTO DA PASTA.
+    passwords_file = open("mypasswords.txt", "r")
+    passwords_file.read() # Falta ajustes para ficar correto.
+    passwords_file.close()
+    op2 = input("Deseja trocar de opção (op) ou fechar o programa (fechar)? ")
+    if op2 == "op": # Retorna para opções.
+      options()
+    elif op2 == "fechar": # Fecha o programa.
+      print("O programa será fechado.")
+      exit
+  elif op == "fechar": # Fecha o programa.
+    print("O programa será fechado.")
+    exit
+  else: # Se algo for escrito errado ou não for um comando válido, retorna as perguntas.
+    print("Este não é um comando válido.")
+    options()
+
+print("Boas vindas ao gerador de senhas aleatórias.\nOs comandos válidos serão mostrados entre parênteses")
+options()
+
+# Se Options falhar, usar o while True.
