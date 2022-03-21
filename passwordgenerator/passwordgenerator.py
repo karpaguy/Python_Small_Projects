@@ -18,7 +18,7 @@ def generate():
       if letnum == 1: # 1 é letra.
         character = random.randrange(97, 122)
         character = chr(character)
-        upplow = random.randrange(1) # Decide se será 1 ou 2.
+        upplow = random.randrange(2) # Decide se será 1 ou 2.
         if upplow == 1: # Se for 1 será maiúsculo
           character = character.upper()
           password = password + str(character)
