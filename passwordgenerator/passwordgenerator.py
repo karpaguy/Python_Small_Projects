@@ -93,5 +93,3 @@ def options():
 
 print("Boas vindas ao gerador de senhas aleatórias.\nOs comandos válidos serão mostrados entre parênteses")
 options()
-
-# Se Options falhar, usar o while True.
