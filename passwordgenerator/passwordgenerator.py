@@ -4,10 +4,16 @@ from string import octdigits
 # Ainda falta determinar o total de caracteres que deseja na senha.
 
 def generate():
+  while True: # Aqui vai dar o input de quantos caracteres vai ter a senha.
+    try:
+      ltnum = int(input("Insira o total de caracteres que deseja em sua senha: "))
+      break
+    except: # e o usuário não der um número, ele pergunta novamente.
+      print("O valor inserido não é um número inteiro.")
   password = ""
   sn = True # Confirma os dados anteriores e segue
   if sn == True:
-    for letter in range(10):
+    for letter in range(ltnum):
       letnum = random.randrange(2) # Decide se será 1 ou 2.
       if letnum == 1: # 1 é letra.
         character = random.randrange(97, 122)
@@ -30,7 +36,7 @@ def generate():
     exit
 
 def opgen(): # Ao ter trocado de sn para snop deu certo, mas porque?
-  snop = input("Deseja fazer uma nova senha (sim/não)? ") # Entrega o input para as escolhar, sim ou não. 
+  snop = input("\nDeseja fazer uma nova senha (sim/não)? ") # Entrega o input para as escolhar, sim ou não. 
   snop = snop.lower()
   if snop == "sim": # Se for verdadeiro, segue e faz novamente. - O True pode ser descartado.
     sn = True
@@ -51,7 +57,7 @@ def salvar(password): # Listei o parâmetro sendo a varíavel password, existent
     passwords_file.write("• " + passname + ": " + password + "\n")
     passwords_file.close()
   elif sn2 == "não": # Descarta a senha.
-    print("Senha descartada")
+    print("Senha descartada.")
   else: # Retorna a pergunta se for digitado outro valor para o input.
     print("Este não é um comando válido.")
     salvar(password) # É preciso especificar o argumento novamente para iniciar sem erros.
