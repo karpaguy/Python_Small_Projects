@@ -88,7 +88,7 @@ def options():
     print("O programa será fechado.")
     exit
   else: # Se algo for escrito errado ou não for um comando válido, retorna as perguntas.
-    print("Este não é um comando válido.")
+    print("Est não é um comando válido.")
     options()
 
 print("Boas vindas ao gerador de senhas aleatórias.\nOs comandos válidos serão mostrados entre parênteses")
